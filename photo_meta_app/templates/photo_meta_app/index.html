@@ -1,0 +1,29 @@
+{% extends 'photo_meta_app/base.html' %}
+{% block content %}
+  <h2>Список файлов</h2>
+  {% if not has_any %}
+    <p>Файлов не найдено. Добавьте файл через форму или загрузите JSON/XML.</p>
+  {% else %}
+    <h3>JSON</h3>
+    {% if files.json %}
+      <ul>
+        {% for f in files.json %}
+          <li><a href="{% url 'photo_meta_app:view_file' f.name %}">{{ f.name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>JSON файлов нет.</p>
+    {% endif %}
+
+    <h3>XML</h3>
+    {% if files.xml %}
+      <ul>
+        {% for f in files.xml %}
+          <li><a href="{% url 'photo_meta_app:view_file' f.name %}">{{ f.name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>XML файлов нет.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

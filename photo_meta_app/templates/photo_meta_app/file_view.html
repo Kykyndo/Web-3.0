@@ -1,0 +1,6 @@
+{% extends 'photo_meta_app/base.html' %}
+{% block content %}
+  <h2>Просмотр файла: {{ filename }}</h2>
+  <pre>{{ data|safe }}</pre>
+  <a href="{% url 'photo_meta_app:index' %}">Назад</a>
+{% endblock %}

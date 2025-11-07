@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Метаданные фотографий</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+  <header>
+    <h1>Метаданные о фотографиях</h1>
+    <nav>
+      <a href="{% url 'photo_meta_app:index' %}">Главная</a> |
+      <a href="{% url 'photo_meta_app:add_metadata' %}">Добавить метаданные</a> |
+      <a href="{% url 'photo_meta_app:upload_file' %}">Загрузить файл (JSON/XML)</a>
+    </nav>
+    <hr>
+  </header>
+
+  {% if messages %}
+    <section>
+      {% for message in messages %}
+        <div role="alert">{{ message }}</div>
+      {% endfor %}
+    </section>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <hr>
+    <small>Генерируемые файлы сохраняются в папке <code>uploaded_files/json</code> и <code>uploaded_files/xml</code></small>
+  </footer>
+</body>
+</html>

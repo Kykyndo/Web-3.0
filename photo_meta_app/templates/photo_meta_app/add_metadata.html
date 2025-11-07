@@ -1,0 +1,11 @@
+{% extends 'photo_meta_app/base.html' %}
+{% block content %}
+  <h2>Добавить метаданные фотографии</h2>
+  <form method="post">
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Сохранить в файл</button>
+  </form>
+{% endblock %}

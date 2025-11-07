@@ -1,0 +1,9 @@
+{% extends 'photo_meta_app/base.html' %}
+{% block content %}
+  <h2>Загрузить файл (JSON или XML)</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Файл: <input type="file" name="data_file" accept=".json,.xml"></label>
+    <div><button type="submit">Загрузить</button></div>
+  </form>
+{% endblock %}
