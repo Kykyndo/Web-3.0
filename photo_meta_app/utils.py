@@ -1,6 +1,4 @@
-import os
-import json
-import uuid
+import os, json, uuid
 from xml.etree import ElementTree as ET
 from django.conf import settings
 
@@ -21,8 +19,17 @@ def save_dict_as_json(data: dict, filename: str = None) -> str:
     if filename is None:
         filename = generate_safe_filename('json')
     path = os.path.join(UPLOAD_DIR_JSON, filename)
+    # Ensure all values are serializable
+    def convert(o):
+        if o is None:
+            return None
+        if isinstance(o, (list, dict, str, int, float, bool)):
+            return o
+        # fallback: cast to string
+        return str(o)
+    safe = {k: convert(v) for k, v in data.items()}
     with open(path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        json.dump(safe, f, ensure_ascii=False, indent=2)
     return path
 
 def dict_to_xml(data: dict) -> ET.Element:
@@ -32,7 +39,7 @@ def dict_to_xml(data: dict) -> ET.Element:
             parent = ET.SubElement(root, k)
             for item in v:
                 child = ET.SubElement(parent, 'item')
-                child.text = str(item)
+                child.text = '' if item is None else str(item)
         else:
             child = ET.SubElement(root, k)
             child.text = '' if v is None else str(v)
@@ -91,7 +98,7 @@ def list_all_files():
     for folder, key in ((UPLOAD_DIR_JSON, 'json'), (UPLOAD_DIR_XML, 'xml')):
         if not os.path.exists(folder):
             continue
-        for fn in os.listdir(folder):
+        for fn in sorted(os.listdir(folder)):
             if fn.startswith('.'):
                 continue
             path = os.path.join(folder, fn)
