@@ -4,7 +4,7 @@
 
 ### 1. Клонирование и установка
 ```bash
-git clone <репозиторий>
+git clone https://github.com/Kykyndo/Web-3.0/edit/main/README.md
 cd event_planner_project
 python -m venv venv
 venv\Scripts\activate  # Windows
